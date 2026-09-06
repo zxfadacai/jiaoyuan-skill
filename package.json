@@ -1,0 +1,54 @@
+{
+  "name": "jiaoyuan-skill",
+  "version": "1.4.1",
+  "description": "以实事求是为核心的辩证方法论 Skill，融合人格化表达与可执行工作流，用于分析问题、制定策略、组织行动。",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "jiaoyuan-skill": "./bin/jiaoyuan-skill.mjs"
+  },
+  "files": [
+    "skills",
+    "dna",
+    "knowledge",
+    "commands",
+    "hooks",
+    "agents",
+    ".claude-plugin",
+    ".cursor-plugin",
+    ".codex",
+    ".opencode",
+    ".openclaw",
+    ".hermes",
+    ".nanobot",
+    "bin",
+    "README.md",
+    "README.en.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18.17"
+  },
+  "scripts": {
+    "validate": "node ./bin/jiaoyuan-skill.mjs validate",
+    "validate:sh": "bash tests/validate.sh",
+    "validate:win": "powershell -NoLogo -NoProfile -ExecutionPolicy Bypass -File tests/validate.ps1",
+    "test": "node --test tests/*.test.mjs && node ./bin/jiaoyuan-skill.mjs validate",
+    "test:sh": "bash tests/validate.sh",
+    "test:win": "powershell -NoLogo -NoProfile -ExecutionPolicy Bypass -File tests/validate.ps1",
+    "verify:install": "node ./bin/jiaoyuan-skill.mjs validate"
+  },
+  "keywords": [
+    "agent",
+    "skills",
+    "claude-code",
+    "cursor",
+    "codex",
+    "opencode",
+    "openclaw",
+    "hermes-agent",
+    "methodology",
+    "productivity",
+    "chinese"
+  ]
+}
