@@ -61,8 +61,8 @@ test("opencode installs both skills and slash command files", async () => {
       /name:\s*jiaoyuan/
     );
     assert.match(
-      await readInstalled(path.join(".config", "opencode", "commands", "contradiction-analysis.md"), context),
-      /name:\s*contradiction-analysis/
+      await readInstalled(path.join(".config", "opencode", "commands", "矛盾分析法.md"), context),
+      /name:\s*矛盾分析法/
     );
   });
 });

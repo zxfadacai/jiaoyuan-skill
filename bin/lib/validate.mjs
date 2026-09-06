@@ -39,18 +39,18 @@ const MARKDOWN_FILES = [
 ];
 
 const COMMANDS = [
-  "contradiction-analysis",
-  "practice-cognition",
-  "investigation-first",
-  "mass-line",
-  "criticism-self-criticism",
-  "protracted-strategy",
-  "concentrate-forces",
-  "spark-prairie-fire",
-  "overall-planning",
-  "workflows",
-  "paper-tiger",
-  "united-front",
+  "矛盾分析法",
+  "实践认识论",
+  "调查研究",
+  "群众路线",
+  "批评与自我批评",
+  "持久战略",
+  "集中兵力",
+  "星火燎原",
+  "统筹兼顾",
+  "工作流组合",
+  "纸老虎论",
+  "统一战线",
 ];
 
 async function exists(targetPath) {

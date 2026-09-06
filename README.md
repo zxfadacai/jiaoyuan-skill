@@ -74,17 +74,18 @@ npx jiaoyuan-skill validate
 手动命令入口（对应 `commands/*.md`）：
 
 ```
-/contradiction-analysis   矛盾分析法
-/practice-cognition       实践认识论
-/investigation-first      调查研究
-/mass-line                群众路线
-/criticism-self-criticism 批评与自我批评
-/protracted-strategy      持久战略
-/concentrate-forces       集中兵力
-/spark-prairie-fire       星火燎原
-/overall-planning         统筹兼顾
-/paper-tiger              纸老虎论
-/workflows                工作流组合
+/矛盾分析法
+/实践认识论
+/调查研究
+/群众路线
+/批评与自我批评
+/持久战略
+/集中兵力
+/星火燎原
+/统筹兼顾
+/统一战线
+/纸老虎论
+/工作流组合
 ```
 
 ## 原著依据
