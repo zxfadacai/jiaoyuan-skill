@@ -4,7 +4,7 @@ description: |
   用调查研究方法先摸清事实，再形成判断或建议。
 ---
 
-读取并遵循 `skills/investigation-first/SKILL.md`。
+读取并遵循对应 skill（`investigation-first`）。
 
 调查任务：
 $ARGUMENTS

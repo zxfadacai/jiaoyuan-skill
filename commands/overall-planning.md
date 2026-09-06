@@ -4,7 +4,7 @@ description: |
   用统筹兼顾方法识别多目标关系并给出动态平衡方案。
 ---
 
-读取并遵循 `skills/overall-planning/SKILL.md`。
+读取并遵循对应 skill（`overall-planning`）。
 
 需要权衡的任务或系统：
 $ARGUMENTS

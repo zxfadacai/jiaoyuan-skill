@@ -4,7 +4,7 @@ description: |
   用集中兵力方法在多个任务中锁定主攻目标。
 ---
 
-读取并遵循 `skills/concentrate-forces/SKILL.md`。
+读取并遵循对应 skill（`concentrate-forces`）。
 
 待排序的任务或问题：
 $ARGUMENTS

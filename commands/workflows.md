@@ -4,7 +4,7 @@ description: |
   选择并执行一条标准化的多-skill 工作流。
 ---
 
-读取并遵循 `skills/workflows/SKILL.md`。
+读取并遵循对应 skill（`workflows`）。
 
 任务：
 $ARGUMENTS

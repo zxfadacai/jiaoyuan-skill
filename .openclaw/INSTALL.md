@@ -13,8 +13,8 @@ CLI 会复制到 `~/.openclaw/skills/jiaoyuan-skill/` 分组下。
 ## 可选路径：走 GitHub marketplace
 
 ```bash
-openclaw plugins marketplace list jiaoyuan-skill
-openclaw plugins install jiaoyuan-skill --marketplace jiaoyuan-skill
+openclaw plugins marketplace list zxfadacai/jiaoyuan-skill
+openclaw plugins install jiaoyuan-skill --marketplace zxfadacai/jiaoyuan-skill
 openclaw plugins enable jiaoyuan-skill
 openclaw gateway restart
 ```

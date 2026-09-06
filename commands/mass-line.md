@@ -4,7 +4,7 @@ description: |
   用群众路线收集多源信息、整合反馈并返回验证。
 ---
 
-读取并遵循 `skills/mass-line/SKILL.md`。
+读取并遵循对应 skill（`mass-line`）。
 
 需要综合的主题或反馈：
 $ARGUMENTS

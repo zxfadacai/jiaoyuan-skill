@@ -4,7 +4,7 @@ description: |
   用纸老虎论区分战略藐视与战术重视，应对貌似强大的对手或困难。
 ---
 
-读取并遵循 `skills/paper-tiger/SKILL.md`。
+读取并遵循对应 skill（`paper-tiger`）。
 
 当前问题：
 $ARGUMENTS

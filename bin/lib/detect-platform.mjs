@@ -3,7 +3,8 @@ import path from "node:path";
 import { access } from "node:fs/promises";
 
 export const PACKAGE_NAME = "jiaoyuan-skill";
-export const REPOSITORY = "jiaoyuan-skill";
+// 发布前确认仓库地址：REPOSITORY 与 GITHUB_BLOB_BASE 的 owner 需与实际 GitHub 仓库一致，否则各平台文档链接会 404
+export const REPOSITORY = "zxfadacai/jiaoyuan-skill";
 export const GITHUB_BLOB_BASE = "https://github.com/zxfadacai/jiaoyuan-skill/blob/main";
 
 async function exists(targetPath) {
@@ -28,7 +29,7 @@ export function getPlatformCatalog({ cwd = process.cwd(), homeDir = os.homedir()
       mode: "copy",
       installKind: "bundle",
       summary: "复制 Claude 插件 bundle 到标准 plugins 目录",
-      assets: ["skills", "commands", "agents", "hooks", "dna", "knowledge", ".claude-plugin"],
+      assets: ["skills", "commands", "agents", "hooks", ".claude-plugin"],
       paths: {
         user: path.join(homeDir, ".claude", "plugins", PACKAGE_NAME),
         project: path.join(cwd, ".claude", "plugins", PACKAGE_NAME),
@@ -41,7 +42,7 @@ export function getPlatformCatalog({ cwd = process.cwd(), homeDir = os.homedir()
       mode: "copy",
       installKind: "bundle",
       summary: "复制 Cursor 插件元数据与方法论资产到标准 plugins 目录",
-      assets: ["skills", "commands", "agents", "hooks", "dna", "knowledge", ".cursor-plugin"],
+      assets: ["skills", "commands", "agents", "hooks", ".cursor-plugin"],
       paths: {
         user: path.join(homeDir, ".cursor", "plugins", PACKAGE_NAME),
         project: path.join(cwd, ".cursor", "plugins", PACKAGE_NAME),
@@ -91,7 +92,7 @@ export function getPlatformCatalog({ cwd = process.cwd(), homeDir = os.homedir()
       },
       markers: [path.join(homeDir, ".openclaw"), path.join(cwd, ".openclaw")],
       docUrl: `${GITHUB_BLOB_BASE}/.openclaw/INSTALL.md`,
-      note: `也可以使用 OpenClaw marketplace：openclaw plugins install ${PACKAGE_NAME}@${REPOSITORY}`,
+      note: `也可以使用 OpenClaw marketplace：openclaw plugins install ${PACKAGE_NAME} --marketplace ${REPOSITORY}`,
     },
     {
       id: "hermes",

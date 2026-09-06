@@ -33,7 +33,7 @@
 | 调查研究 | 没有调查就没有发言权 | 《反对本本主义》 |
 | 群众路线 | 从群众中来，到群众中去 | 《关于领导方法的若干问题》 |
 | 批评与自我批评 | 惩前毖后，治病救人 | 《论联合政府》 |
-| 持久战略 | 战略上藐视，战术上重视 | 《论持久战》 |
+| 持久战略 | 战略防御→相持→反攻 | 《论持久战》 |
 | 集中兵力 | 集中优势兵力，各个歼灭 | 《中国革命战争的战略问题》 |
 | 星火燎原 | 建立根据地，不做流寇 | 《星星之火，可以燎原》 |
 | 统筹兼顾 | 调动一切积极因素 | 《论十大关系》 |
@@ -68,6 +68,8 @@ npx jiaoyuan-skill validate
 2. 根据场景判断是否值得调用某个思想武器；
 3. 在明显适用时加载对应 skill，而不是机械全调用。
 
+> 注：会话自动注入（SessionStart hook）仅对 Claude Code / Cursor 生效；Codex、OpenCode、OpenClaw、Hermes、nanobot 通过入口 skill 的 name + description 被宿主发现并按需读取。
+
 手动命令入口（对应 `commands/*.md`）：
 
 ```
@@ -96,6 +98,8 @@ npx jiaoyuan-skill validate
 jiaoyuan-skill/
 ├── skills/                     # 入口 + 十件思想武器 + 工作流
 │   ├── jiaoyuan/               # 会话入口（身份 + 总原则 + 调度 + 输出协议）
+│   │   ├── dna/                # 人格层（身份卡/表达 DNA/价值观/内在张力/谱系）
+│   │   └── knowledge/          # 外挂知识库发现与检索机制
 │   ├── contradiction-analysis/
 │   ├── practice-cognition/
 │   ├── investigation-first/
@@ -107,8 +111,6 @@ jiaoyuan-skill/
 │   ├── overall-planning/
 │   ├── paper-tiger/
 │   └── workflows/
-├── dna/                        # 人格层（身份卡/表达 DNA/价值观/内在张力/谱系）
-├── knowledge/                  # 外挂知识库发现与检索机制
 ├── agents/                     # 可派遣 subagent
 ├── commands/                   # 手动 slash commands
 ├── hooks/                      # SessionStart 注入

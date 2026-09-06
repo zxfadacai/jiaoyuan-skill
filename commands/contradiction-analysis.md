@@ -4,7 +4,7 @@ description: |
   用矛盾分析法识别主要矛盾、主要方面和处理方向。
 ---
 
-读取并遵循 `skills/contradiction-analysis/SKILL.md`。
+读取并遵循对应 skill（`contradiction-analysis`）。
 
 当前问题：
 $ARGUMENTS

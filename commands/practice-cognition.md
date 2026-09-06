@@ -4,7 +4,7 @@ description: |
   用实践认识论设计验证回路、记录假说并推动迭代。
 ---
 
-读取并遵循 `skills/practice-cognition/SKILL.md`。
+读取并遵循对应 skill（`practice-cognition`）。
 
 待验证的方案或问题：
 $ARGUMENTS

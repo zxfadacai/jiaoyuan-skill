@@ -23,7 +23,7 @@ Supported platforms: Claude Code, Cursor, Codex, OpenCode, OpenClaw, Hermes, nan
 
 ## Usage
 
-On session start, the entry skill is injected automatically: it first constrains judgment with "seek truth from facts", then dispatches the appropriate thinking tool only when clearly useful.
+On session start (Claude Code / Cursor), the entry skill is injected automatically via a SessionStart hook: it first constrains judgment with "seek truth from facts", then dispatches the appropriate thinking tool only when clearly useful. On Codex, OpenCode, OpenClaw, Hermes, and nanobot, the entry skill is discovered by its name + description and read on demand.
 
 ## Sources
 

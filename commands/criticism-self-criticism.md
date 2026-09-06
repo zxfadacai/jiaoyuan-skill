@@ -4,7 +4,7 @@ description: |
   用批评与自我批评方法对已完成工作做结构化审查。
 ---
 
-读取并遵循 `skills/criticism-self-criticism/SKILL.md`。
+读取并遵循对应 skill（`criticism-self-criticism`）。
 
 待审视的工作：
 $ARGUMENTS

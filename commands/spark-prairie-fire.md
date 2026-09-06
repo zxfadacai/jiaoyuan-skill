@@ -4,7 +4,7 @@ description: |
   用星火燎原方法为从零起步的任务选择根据地和最小切入口。
 ---
 
-读取并遵循 `skills/spark-prairie-fire/SKILL.md`。
+读取并遵循对应 skill（`spark-prairie-fire`）。
 
 从零启动的任务：
 $ARGUMENTS

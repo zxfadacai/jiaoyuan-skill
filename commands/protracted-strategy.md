@@ -4,7 +4,7 @@ description: |
   用持久战略为长期复杂任务划分阶段、设置转折条件。
 ---
 
-读取并遵循 `skills/protracted-strategy/SKILL.md`。
+读取并遵循对应 skill（`protracted-strategy`）。
 
 长期任务：
 $ARGUMENTS
