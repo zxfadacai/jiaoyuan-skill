@@ -1,6 +1,6 @@
 {
   "name": "jiaoyuan-skill",
-  "version": "1.4.1",
+  "version": "1.0.0",
   "description": "以实事求是为核心的辩证方法论 Skill，融合人格化表达与可执行工作流，用于分析问题、制定策略、组织行动。",
   "license": "MIT",
   "type": "module",

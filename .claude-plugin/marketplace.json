@@ -2,14 +2,14 @@
   "name": "jiaoyuan-skill",
   "metadata": {
     "description": "以实事求是为核心的辩证方法论 Skills 合集，融合人格化表达与可执行工作流",
-    "version": "1.4.1"
+    "version": "1.0.0"
   },
   "plugins": [
     {
       "name": "jiaoyuan-skill",
       "source": "./",
       "description": "方法论 Skills + SessionStart hook + commands",
-      "version": "1.4.1",
+      "version": "1.0.0",
       "category": "productivity",
       "keywords": [
         "methodology",

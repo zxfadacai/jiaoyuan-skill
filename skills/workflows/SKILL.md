@@ -209,6 +209,8 @@ mass-line → contradiction-analysis → practice-cognition → criticism-self-c
 | 已有方案但效果不理想，需要迭代优化 | Workflow 3：方案迭代优化 |
 | 以上都不完全符合 | 回到 `jiaoyuan` 的调度表，单独调用最匹配的 skill |
 
+> 注：`paper-tiger`（纸老虎论）是心态校准，通常不单独编排；在面对强敌或高压任务时，可在任一工作流开始前先做一次「战略藐视 + 战术重视」的校准。`united-front`（统一战线）适用于涉及多方结盟/竞合的决策，可在 Workflow 1 的矛盾分析后插入。
+
 ## 数据传递规则
 
 工作流中每个步骤的**输出必须显式传递给下一步骤**。具体做法：

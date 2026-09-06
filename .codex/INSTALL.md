@@ -27,6 +27,7 @@ npx jiaoyuan-skill install --target codex --scope project
    - `skills/spark-prairie-fire/SKILL.md`
    - `skills/overall-planning/SKILL.md`
    - `skills/paper-tiger/SKILL.md`
+   - `skills/united-front/SKILL.md`
    - `skills/workflows/SKILL.md`
 4. 如果宿主支持 Markdown commands，可额外加载 `commands/` 目录作为手动入口；不支持时，直接读取同名命令文件内容即可。
 5. 优先运行：

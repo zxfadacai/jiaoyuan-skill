@@ -7,7 +7,7 @@ A methodology skill for AI agents, grounded in "seek truth from facts" and diale
 ## What it is
 
 - **One guiding principle**: seek truth from facts — look at facts before judging.
-- **Ten thinking tools**: contradiction analysis, practice-cognition, investigation first, mass line, criticism & self-criticism, protracted strategy, concentrate forces, spark a prairie fire, overall planning, paper tiger.
+- **Eleven thinking tools**: contradiction analysis, practice-cognition, investigation first, mass line, criticism & self-criticism, protracted strategy, concentrate forces, spark a prairie fire, overall planning, united front, paper tiger.
 - **Workflow orchestration**: new-project launch, hard-problem attack, iterative refinement.
 - **A persona layer**: first-person expression DNA, values, and internal tensions.
 

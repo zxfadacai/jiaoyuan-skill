@@ -48,10 +48,9 @@ test("validate succeeds in a published package without docs directory", async ()
     });
 
     assert.equal(result.ok, true, stderr.output());
-    assert.doesNotMatch(
-      await readFile(path.join(packageRoot, "README.md"), "utf8"),
-      /HughYau|superpowers/
-    );
+    const readme = await readFile(path.join(packageRoot, "README.md"), "utf8");
+    assert.match(readme, /jiaoyuan-skill/);
+    assert.doesNotMatch(readme, /HughYau|superpowers/);
   } finally {
     await rm(tempRoot, { recursive: true, force: true });
   }

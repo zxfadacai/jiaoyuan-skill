@@ -50,6 +50,7 @@ const COMMANDS = [
   "overall-planning",
   "workflows",
   "paper-tiger",
+  "united-front",
 ];
 
 async function exists(targetPath) {
