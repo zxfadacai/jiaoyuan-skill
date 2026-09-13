@@ -90,9 +90,28 @@ npx jiaoyuan-skill validate
 
 ## 原著依据
 
-所有方法论均引自公开出版物，每条引用标注篇名与年份，保证方法论有据可查。部分 skill 目录下附 `original-texts.md` 原文引用。
+所有方法论均引自公开出版物，每条引用标注篇名与年份，保证方法论有据可查。各 skill 目录下附 `original-texts.md` 原文引用，其中**逐字引语**与**编者概括**在格式上严格区分。
 
-本 Skill 可挂载《毛泽东选集》全文数字化版本作为可选外部知识库，用于检索原文与精确引用；未配置时静默降级，仅使用内置框架。
+### 可选：挂载《毛泽东选集》全文知识库
+
+用于检索原文、精确引用、逐条核验篇目编号。**不装也不影响使用**：各武器目录下的 `original-texts.md` 已内联全部核验过的原文引用，随 skill 一起安装。
+
+未安装时，AI 不主动检索；但如果你明确索要原文而内置引文里没有，它会如实说明只能引用内置引文，并给出下面的安装命令——不会凭记忆复述原文。
+
+```bash
+git clone https://github.com/weiyinfu/MaoZeDongAnthology.git ~/MaoZeDongAnthology
+```
+
+该仓库收录《毛泽东选集》一至五卷共 229 篇（`src/NNN-标题.md`，编号 000–228）及分层目录 `src/目录.md`。
+
+发现顺序（懒加载，只在首次需要检索原文时执行）：
+
+1. 环境变量 `JIAOYUAN_KB_PATH`
+2. 约定目录 `./MaoZeDongAnthology/`、`../MaoZeDongAnthology/`、`~/MaoZeDongAnthology/`
+
+判据是目录下存在 `src/目录.md`。例如把仓库 clone 到本项目的同级目录，即可自动被发现，无需任何配置。
+
+> 注意：《人的正确思想是从哪里来的？》（1963）等**未收入五卷**的单篇在该知识库中检索不到，引用时须单独标注篇名与年份。详见 `skills/jiaoyuan/knowledge/kb-discovery.md`。
 
 ## 项目结构
 
@@ -100,7 +119,7 @@ npx jiaoyuan-skill validate
 jiaoyuan-skill/
 ├── skills/                     # 入口 + 十一件思想武器 + 工作流
 │   ├── jiaoyuan/               # 会话入口（身份 + 总原则 + 调度 + 输出协议）
-│   │   ├── dna/                # 人格层（身份卡/表达 DNA/价值观/内在张力/谱系）
+│   │   ├── dna/                # 人格层（身份卡/表达 DNA/价值观/内在张力/谱系/诚实边界）
 │   │   └── knowledge/          # 外挂知识库发现与检索机制
 │   ├── contradiction-analysis/
 │   ├── practice-cognition/
