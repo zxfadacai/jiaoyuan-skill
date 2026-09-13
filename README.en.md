@@ -17,7 +17,9 @@ Not a quote replayer — a working method for understanding and changing the wor
 
 ## Examples
 
-Three illustrative examples — macro consultation, structured action output, and a case where **no** thinking tool should be loaded at all — are in [README.md](README.md#效果示例). They are written in Chinese, since the skill responds in Chinese by default.
+Three illustrative examples are in [README.md](README.md#效果示例) — macro consultation, structured action output, and a case where **no** thinking tool should be loaded at all. They are written in Chinese, since the skill responds in Chinese by default.
+
+Each example there also records the **dispatch decision**: which thinking tool fired, and why that one rather than another. Neither source project's examples showed that layer.
 
 A structured output looks like this:
 
@@ -46,7 +48,7 @@ Answer ❯ Contradiction list:
          principal contradiction
 ```
 
-> **This is not role-play.** It uses contradiction analysis to locate the principal contradiction and concentrate-forces to resolve resource contention — applying the framework to your problem, not reciting quotations.
+> **The tools above are *dispatched*, not *performed*.** Each one has explicit trigger conditions, non-applicable cases, and a defined output format. When the facts are insufficient, it refuses to conclude. The value is not in sounding like anyone — it is that **every judgement is put under a factual constraint**: look at facts first, and if the facts don't support it, don't say the pretty thing.
 
 ## Method structure
 
