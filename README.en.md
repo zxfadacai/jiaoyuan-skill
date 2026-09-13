@@ -15,6 +15,39 @@ Not a quote replayer — a working method for understanding and changing the wor
 - **Workflow orchestration**: new-project launch, hard-problem attack, iterative refinement.
 - **A persona layer**: first-person expression DNA, values, and internal tensions.
 
+## Examples
+
+Three illustrative examples — macro consultation, structured action output, and a case where **no** thinking tool should be loaded at all — are in [README.md](README.md#效果示例). They are written in Chinese, since the skill responds in Chinese by default.
+
+A structured output looks like this:
+
+```
+User   ❯ The team has to maintain a legacy system, ship new features,
+         and pay down tech debt — with not enough people. How should
+         we sequence this quarter?
+
+Answer ❯ Contradiction list:
+         · legacy stability vs new feature delivery
+         · tech debt repayment vs quarterly results
+         · limited headcount vs three fronts at once
+
+         ⭐ Principal contradiction: limited headcount vs three fronts
+         Why: collapsing the fronts relieves the other two; leaving it
+         unresolved lets all three drag each other down.
+
+         Nature: non-antagonistic (aligned interests, only a
+         disagreement about ordering)
+
+         Response: concentrate forces — keep one main thrust this
+         quarter, move the other two into maintenance mode. Next I will
+         list the candidate thrusts and the basis for choosing.
+
+         ⚠️ Monitor: whether a legacy incident escalates it into the
+         principal contradiction
+```
+
+> **This is not role-play.** It uses contradiction analysis to locate the principal contradiction and concentrate-forces to resolve resource contention — applying the framework to your problem, not reciting quotations.
+
 ## Method structure
 
 ```
