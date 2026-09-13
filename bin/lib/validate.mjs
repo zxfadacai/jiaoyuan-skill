@@ -53,6 +53,53 @@ const COMMANDS = [
   "统一战线",
 ];
 
+const ENTRY_SKILL = "jiaoyuan";
+const ORCHESTRATION_SKILL = "workflows";
+
+const WEAPON_SECTIONS = [
+  "## 不适用场景",
+  "## 何时使用",
+  "## 方法流程",
+  "## 常见错误",
+  "## 操作规程",
+  "## 与其他 skill 的关系",
+];
+
+const CITATION_PATTERN = /——毛泽东|——《/;
+const QUOTE_LINE_PATTERN = /^\s*>\s*"/;
+
+const QUOTE_DISCIPLINE_PREFIXES = ['"', "【编者概括】", "——", "注：", "引文体例"];
+const QUOTE_DISCIPLINE_LABEL_PATTERN = /^第[一二三四五六七八九十]+阶段[：:—-]/;
+
+const WEAPON_FIELDS_PATTERN = /^\*\*输出字段\*\*：(.+)$/m;
+const FIELD_TOKEN_PATTERN = /`([^`]+)`/g;
+const WORKFLOW_STEP_PATTERN = /^\*\*Step\s+\d+：([a-z0-9-]+)（/;
+const ADOPT_LINE_PATTERN = /^- 采用：(.+)$/;
+const EXTRA_LINE_PATTERN = /^- 额外补充：(.+)$/;
+
+function extractFieldTokens(text) {
+  return [...text.matchAll(FIELD_TOKEN_PATTERN)].map((match) => match[1]);
+}
+
+const KB_GUIDANCE_HEADING = "## 知识库不可用时，用户索要原文怎么办";
+
+async function validateKnowledgeBaseGuidance(repoRoot, errors) {
+  const kbPath = path.join(repoRoot, "skills", ENTRY_SKILL, "knowledge", "kb-discovery.md");
+
+  if (!(await exists(kbPath))) {
+    errors.push(`Missing knowledge base doc: skills/${ENTRY_SKILL}/knowledge/kb-discovery.md`);
+    return;
+  }
+
+  const content = await readFile(kbPath, "utf8");
+
+  if (!content.includes(KB_GUIDANCE_HEADING)) {
+    errors.push(
+      `skills/${ENTRY_SKILL}/knowledge/kb-discovery.md is missing '${KB_GUIDANCE_HEADING}' — without it, the behaviour when the knowledge base is absent is undefined`,
+    );
+  }
+}
+
 async function exists(targetPath) {
   try {
     await stat(targetPath);
@@ -183,6 +230,258 @@ async function validateHookStructure(repoRoot, hooksJson, errors) {
   validateTextIncludes(cmdHook, "sh \"%SCRIPT_DIR%%HOOK_NAME%\"", "hooks/run-hook.cmd", errors);
 }
 
+async function validateWeaponStructure(repoRoot, errors) {
+  const skillsRoot = path.join(repoRoot, "skills");
+  const entries = await readdir(skillsRoot, { withFileTypes: true });
+  const weapons = entries
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .filter((name) => name !== ENTRY_SKILL && name !== ORCHESTRATION_SKILL)
+    .sort();
+
+  if (weapons.length === 0) {
+    errors.push("skills/ contains no weapon directories");
+    return;
+  }
+
+  for (const weapon of weapons) {
+    const label = `skills/${weapon}/SKILL.md`;
+    const skillPath = path.join(skillsRoot, weapon, "SKILL.md");
+
+    if (!(await exists(skillPath))) {
+      errors.push(`Missing weapon skill file: ${label}`);
+      continue;
+    }
+
+    const content = await readFile(skillPath, "utf8");
+
+    for (const section of WEAPON_SECTIONS) {
+      if (!content.includes(section)) {
+        errors.push(`${label} is missing required section '${section}'`);
+      }
+    }
+
+    if (!CITATION_PATTERN.test(content)) {
+      errors.push(`${label} has no inline source citation (expected '——毛泽东' or '——《')`);
+    }
+
+    const originPath = path.join(skillsRoot, weapon, "original-texts.md");
+    if (!(await exists(originPath))) {
+      errors.push(`Missing original-texts.md for weapon: skills/${weapon}/`);
+      continue;
+    }
+
+    const originContent = await readFile(originPath, "utf8");
+    const quoteCount = originContent
+      .split(/\r?\n/)
+      .filter((line) => QUOTE_LINE_PATTERN.test(line)).length;
+
+    if (quoteCount === 0) {
+      errors.push(`skills/${weapon}/original-texts.md contains no quoted original text`);
+    }
+  }
+}
+
+async function validatePersonaLayer(repoRoot, errors) {
+  const entrySkillPath = path.join(repoRoot, "skills", ENTRY_SKILL, "SKILL.md");
+  if (!(await exists(entrySkillPath))) {
+    return;
+  }
+
+  const dnaDir = path.join(repoRoot, "skills", ENTRY_SKILL, "dna");
+  if (!(await exists(dnaDir))) {
+    errors.push(`Missing persona layer directory: skills/${ENTRY_SKILL}/dna`);
+    return;
+  }
+
+  const actual = (await readdir(dnaDir))
+    .filter((name) => name.endsWith(".md"))
+    .sort();
+
+  if (actual.length === 0) {
+    errors.push(`skills/${ENTRY_SKILL}/dna contains no markdown files`);
+    return;
+  }
+
+  const content = await readFile(entrySkillPath, "utf8");
+  const loadLine = content
+    .split(/\r?\n/)
+    .find((line) => line.includes("`dna/`") && line.includes("加载"));
+
+  if (!loadLine) {
+    return;
+  }
+
+  const declared = [...loadLine.matchAll(/`([A-Za-z0-9._-]+\.md)`/g)]
+    .map((match) => match[1])
+    .filter((name, index, list) => list.indexOf(name) === index)
+    .sort();
+
+  for (const name of actual) {
+    if (!declared.includes(name)) {
+      errors.push(`skills/${ENTRY_SKILL}/dna/${name} is not declared in the entry skill load list`);
+    }
+  }
+
+  for (const name of declared) {
+    if (!actual.includes(name)) {
+      errors.push(`entry skill load list declares dna/${name} but the file does not exist`);
+    }
+  }
+}
+
+async function validateQuoteDiscipline(repoRoot, errors) {
+  const skillsRoot = path.join(repoRoot, "skills");
+  const entries = await readdir(skillsRoot, { withFileTypes: true });
+
+  for (const entry of entries) {
+    if (!entry.isDirectory()) {
+      continue;
+    }
+
+    const originPath = path.join(skillsRoot, entry.name, "original-texts.md");
+    if (!(await exists(originPath))) {
+      continue;
+    }
+
+    const label = `skills/${entry.name}/original-texts.md`;
+    const lines = (await readFile(originPath, "utf8")).split(/\r?\n/);
+
+    lines.forEach((line, index) => {
+      const trimmed = line.trim();
+      if (!trimmed.startsWith(">")) {
+        return;
+      }
+
+      const body = trimmed.replace(/^>+\s*/, "");
+      if (!body) {
+        return;
+      }
+
+      if (QUOTE_DISCIPLINE_PREFIXES.some((prefix) => body.startsWith(prefix))) {
+        return;
+      }
+
+      if (QUOTE_DISCIPLINE_LABEL_PATTERN.test(body)) {
+        return;
+      }
+
+      errors.push(
+        `${label}:${index + 1} blockquote must start with '"' (verbatim quote) or be marked with one of: ${QUOTE_DISCIPLINE_PREFIXES.join(" ")}`,
+      );
+    });
+  }
+}
+
+async function collectWeaponFields(repoRoot, errors) {
+  const skillsRoot = path.join(repoRoot, "skills");
+  const entries = await readdir(skillsRoot, { withFileTypes: true });
+  const weapons = entries
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .filter((name) => name !== ENTRY_SKILL && name !== ORCHESTRATION_SKILL)
+    .sort();
+
+  const fields = new Map();
+
+  for (const weapon of weapons) {
+    const skillPath = path.join(skillsRoot, weapon, "SKILL.md");
+    if (!(await exists(skillPath))) {
+      continue;
+    }
+
+    const content = await readFile(skillPath, "utf8");
+    const match = content.match(WEAPON_FIELDS_PATTERN);
+
+    if (!match) {
+      errors.push(
+        `skills/${weapon}/SKILL.md is missing the '**输出字段**：' declaration in 操作规程`,
+      );
+      continue;
+    }
+
+    const tokens = extractFieldTokens(match[1]);
+    if (tokens.length === 0) {
+      errors.push(`skills/${weapon}/SKILL.md declares '输出字段' but lists no backticked fields`);
+      continue;
+    }
+
+    fields.set(weapon, tokens);
+  }
+
+  return fields;
+}
+
+async function validateWorkflowContracts(repoRoot, errors) {
+  const weaponFields = await collectWeaponFields(repoRoot, errors);
+
+  const workflowPath = path.join(repoRoot, "skills", ORCHESTRATION_SKILL, "SKILL.md");
+  if (!(await exists(workflowPath))) {
+    return;
+  }
+
+  const label = `skills/${ORCHESTRATION_SKILL}/SKILL.md`;
+  const lines = (await readFile(workflowPath, "utf8")).split(/\r?\n/);
+
+  let currentWeapon = null;
+  let sawAdopt = false;
+  let stepLine = 0;
+
+  const closeStep = () => {
+    if (currentWeapon && !sawAdopt) {
+      errors.push(`${label}:${stepLine} step '${currentWeapon}' has no '- 采用：' line`);
+    }
+  };
+
+  lines.forEach((line, index) => {
+    const stepMatch = line.match(WORKFLOW_STEP_PATTERN);
+
+    if (stepMatch) {
+      closeStep();
+      currentWeapon = stepMatch[1];
+      sawAdopt = false;
+      stepLine = index + 1;
+
+      if (!weaponFields.has(currentWeapon)) {
+        errors.push(`${label}:${index + 1} step references unknown weapon '${currentWeapon}'`);
+      }
+      return;
+    }
+
+    if (!currentWeapon) {
+      return;
+    }
+
+    const expected = weaponFields.get(currentWeapon) ?? [];
+
+    const adoptMatch = line.match(ADOPT_LINE_PATTERN);
+    if (adoptMatch) {
+      sawAdopt = true;
+      for (const token of extractFieldTokens(adoptMatch[1])) {
+        if (!expected.includes(token)) {
+          errors.push(
+            `${label}:${index + 1} step '${currentWeapon}' adopts field '${token}', which is not in that weapon's 输出字段`,
+          );
+        }
+      }
+      return;
+    }
+
+    const extraMatch = line.match(EXTRA_LINE_PATTERN);
+    if (extraMatch) {
+      for (const token of extractFieldTokens(extraMatch[1])) {
+        if (expected.includes(token)) {
+          errors.push(
+            `${label}:${index + 1} step '${currentWeapon}' lists '${token}' as 额外补充, but that weapon already outputs it`,
+          );
+        }
+      }
+    }
+  });
+
+  closeStep();
+}
+
 export async function runValidation({ repoRoot, stdout = process.stdout, stderr = process.stderr } = {}) {
   const root = repoRoot ?? path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
   const errors = [];
@@ -270,6 +569,21 @@ export async function runValidation({ repoRoot, stdout = process.stdout, stderr 
 
   stdout.write("Validating hook structure...\n");
   await validateHookStructure(root, jsonObjects.get("hooks/hooks.json"), errors);
+
+  stdout.write("Validating weapon structure...\n");
+  await validateWeaponStructure(root, errors);
+
+  stdout.write("Validating persona layer manifest...\n");
+  await validatePersonaLayer(root, errors);
+
+  stdout.write("Validating quote discipline...\n");
+  await validateQuoteDiscipline(root, errors);
+
+  stdout.write("Validating workflow contracts...\n");
+  await validateWorkflowContracts(root, errors);
+
+  stdout.write("Validating knowledge base guidance...\n");
+  await validateKnowledgeBaseGuidance(root, errors);
 
   if (errors.length > 0) {
     for (const error of errors) {
