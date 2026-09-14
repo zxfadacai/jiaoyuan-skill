@@ -538,9 +538,7 @@ export async function runValidation({ repoRoot, stdout = process.stdout, stderr 
   }
 
   stdout.write("Validating frontmatter...\n");
-  const rootSkillPath = path.join(root, "SKILL.md");
   const frontmatterFiles = [
-    ...((await exists(rootSkillPath)) ? [rootSkillPath] : []),
     ...(await walkFiles(path.join(root, "skills"), (filePath) => path.basename(filePath) === "SKILL.md")),
     ...(await walkFiles(path.join(root, "agents"), (filePath) => filePath.endsWith(".md"))),
     ...(await walkFiles(path.join(root, "commands"), (filePath) => filePath.endsWith(".md"))),
