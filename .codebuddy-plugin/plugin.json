@@ -1,0 +1,17 @@
+{
+  "name": "jiaoyuan-skill",
+  "version": "1.1.0",
+  "description": "Jiaoyuan Skill: methodology skills for AI agents guided by seeking truth from facts, with Claude Code, Cursor, OpenClaw, Codex, OpenCode, and Hermes guidance.",
+  "author": {
+    "name": "zxfadacai"
+  },
+  "license": "MIT",
+  "keywords": [
+    "agent",
+    "skills",
+    "methodology",
+    "chinese",
+    "workbuddy"
+  ],
+  "skills": "./skills"
+}

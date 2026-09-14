@@ -231,3 +231,23 @@ test("validate fails when the knowledge base guidance section is missing", async
   assert.equal(result.ok, false);
   assert.match(stderr, /behaviour when the knowledge base is absent is undefined/);
 });
+
+test("validate fails when the platform manifest .codebuddy-plugin/plugin.json is missing", async () => {
+  const { result, stderr } = await withBrokenPackage(async (packageRoot) => {
+    await rm(path.join(packageRoot, ".codebuddy-plugin", "plugin.json"), { force: true });
+  });
+
+  assert.equal(result.ok, false);
+  assert.match(stderr, /Missing JSON file: \.codebuddy-plugin\/plugin\.json/);
+});
+
+test("validate fails when the root SKILL.md has no block description", async () => {
+  const { result, stderr } = await withBrokenPackage(async (packageRoot) => {
+    const target = path.join(packageRoot, "SKILL.md");
+    const content = await readFile(target, "utf8");
+    await writeFile(target, content.replace("description: |", "description: inline text"));
+  });
+
+  assert.equal(result.ok, false);
+  assert.match(stderr, /Missing block 'description' in frontmatter: SKILL\.md/);
+});
